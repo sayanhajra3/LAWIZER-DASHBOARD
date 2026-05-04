@@ -1,222 +1,291 @@
 // Mock data for the Lawizer dashboard. In production this would come from your DB.
 
-export type IntentLevel = "Cold" | "Warm" | "Hot" | "Closing";
+export const kpis = [
+  {
+    label: "New Clients",
+    value: "1,284",
+    delta: 18.4,
+    icon: "users",
+    spark:
+      "M0 24 L10 22 L20 20 L30 22 L40 16 L50 18 L60 12 L70 14 L80 8 L90 10 L100 6 L110 4 L120 2",
+  },
+  {
+    label: "Hot Intent",
+    value: "342",
+    delta: 24.1,
+    icon: "flame",
+    spark:
+      "M0 22 L10 18 L20 20 L30 14 L40 16 L50 10 L60 12 L70 6 L80 8 L90 4 L100 6 L110 2 L120 4",
+  },
+  {
+    label: "Avg Follow-up",
+    value: "4h 12m",
+    delta: -12.6,
+    icon: "clock",
+    spark:
+      "M0 8 L10 12 L20 10 L30 14 L40 12 L50 16 L60 14 L70 18 L80 16 L90 20 L100 18 L110 22 L120 20",
+  },
+  {
+    label: "Revenue (MTD)",
+    value: "$92.4K",
+    delta: 31.7,
+    icon: "wallet",
+    spark:
+      "M0 28 L10 24 L20 22 L30 18 L40 20 L50 14 L60 12 L70 10 L80 8 L90 6 L100 4 L110 6 L120 2",
+  },
+]
 
-export type Lead = {
-  id: string;
-  name: string;
-  country: string;
-  flag: string;
-  service: string;
-  intent: IntentLevel;
-  intentScore: number; // 0 - 100
-  followupHours: number; // hours since last followup
-  lawyer: string;
-  stage:
-    | "Inquiry"
-    | "Documents"
-    | "Lawyer Match"
-    | "Filing"
-    | "Booked"
-    | "Registered";
-  value: number; // USD
-  createdAt: string;
-};
+export const performanceSeries = [
+  { month: "Jan", registrations: 84, bookings: 62, matches: 41 },
+  { month: "Feb", registrations: 96, bookings: 71, matches: 48 },
+  { month: "Mar", registrations: 112, bookings: 84, matches: 57 },
+  { month: "Apr", registrations: 128, bookings: 98, matches: 64 },
+  { month: "May", registrations: 142, bookings: 110, matches: 73 },
+  { month: "Jun", registrations: 158, bookings: 124, matches: 84 },
+  { month: "Jul", registrations: 174, bookings: 138, matches: 92 },
+  { month: "Aug", registrations: 192, bookings: 154, matches: 104 },
+  { month: "Sep", registrations: 214, bookings: 172, matches: 118 },
+  { month: "Oct", registrations: 238, bookings: 192, matches: 132 },
+  { month: "Nov", registrations: 262, bookings: 214, matches: 148 },
+  { month: "Dec", registrations: 294, bookings: 242, matches: 168 },
+]
 
-export const performanceData = [
-  { day: "Mon", visits: 2400, leads: 320, conversions: 110 },
-  { day: "Tue", visits: 2900, leads: 410, conversions: 168 },
-  { day: "Wed", visits: 2200, leads: 380, conversions: 142 },
-  { day: "Thu", visits: 3400, leads: 520, conversions: 225 },
-  { day: "Fri", visits: 4100, leads: 610, conversions: 298 },
-  { day: "Sat", visits: 3700, leads: 540, conversions: 246 },
-  { day: "Sun", visits: 4500, leads: 680, conversions: 332 },
-];
-
-export const revenueData = [
-  { month: "Jan", revenue: 184000, target: 160000 },
-  { month: "Feb", revenue: 212000, target: 180000 },
-  { month: "Mar", revenue: 198000, target: 200000 },
-  { month: "Apr", revenue: 256000, target: 220000 },
-  { month: "May", revenue: 289000, target: 240000 },
-  { month: "Jun", revenue: 312000, target: 260000 },
-  { month: "Jul", revenue: 348000, target: 280000 },
-  { month: "Aug", revenue: 392000, target: 300000 },
-  { month: "Sep", revenue: 421000, target: 320000 },
-  { month: "Oct", revenue: 468000, target: 340000 },
-  { month: "Nov", revenue: 512000, target: 360000 },
-  { month: "Dec", revenue: 564000, target: 380000 },
-];
+export const revenueSeries = [
+  { month: "Jan", revenue: 18400 },
+  { month: "Feb", revenue: 21200 },
+  { month: "Mar", revenue: 19800 },
+  { month: "Apr", revenue: 25600 },
+  { month: "May", revenue: 28900 },
+  { month: "Jun", revenue: 31200 },
+  { month: "Jul", revenue: 34800 },
+  { month: "Aug", revenue: 39200 },
+  { month: "Sep", revenue: 42100 },
+  { month: "Oct", revenue: 46800 },
+  { month: "Nov", revenue: 51200 },
+  { month: "Dec", revenue: 56400 },
+]
 
 export const intentDistribution = [
-  { name: "Hot", value: 38, color: "#ff5733" },
-  { name: "Warm", value: 27, color: "#fbbf24" },
-  { name: "Closing", value: 18, color: "#ec4899" },
-  { name: "Cold", value: 17, color: "#06b6d4" },
-];
+  { label: "Hot — ready to file", count: 342, percent: 38, color: "#fb7185" },
+  { label: "Warm — comparing", count: 248, percent: 27, color: "#fcd34d" },
+  { label: "Closing — in pipeline", count: 162, percent: 18, color: "#f0abfc" },
+  { label: "Cold — early research", count: 154, percent: 17, color: "#67e8f9" },
+]
 
-export const serviceMix = [
-  { name: "Pvt Ltd Reg.", value: 42 },
-  { name: "LLC Setup", value: 28 },
-  { name: "Trademark", value: 14 },
-  { name: "Tax Filing", value: 9 },
-  { name: "Compliance", value: 7 },
-];
+export const followupBuckets = [
+  { label: "< 1h", value: "412" },
+  { label: "1–4h", value: "286" },
+  { label: "4–24h", value: "147" },
+  { label: "24h+", value: "61" },
+]
 
-export const leads: Lead[] = [
+export const leads = [
   {
     id: "LZ-2841",
     name: "Aiko Tanaka",
+    company: "Sakura Holdings KK",
+    initials: "AT",
+    avatarGrad: "from-rose-300 to-amber-200",
     country: "Japan",
     flag: "🇯🇵",
-    service: "Pvt Ltd Registration",
+    service: "Pvt. Ltd Registration",
     intent: "Hot",
-    intentScore: 92,
-    followupHours: 2,
-    lawyer: "S. Mehra",
+    intentScore: 9.2,
     stage: "Lawyer Match",
+    followup: "in 38m",
     value: 4200,
-    createdAt: "2h ago",
   },
   {
     id: "LZ-2840",
     name: "Daniel O'Connor",
+    company: "Atlantic Forge LLC",
+    initials: "DO",
+    avatarGrad: "from-cyan-300 to-indigo-300",
     country: "Ireland",
     flag: "🇮🇪",
-    service: "LLC + Tax Filing",
-    intent: "Closing",
-    intentScore: 96,
-    followupHours: 1,
-    lawyer: "P. Khanna",
-    stage: "Filing",
+    service: "International LLC + Tax",
+    intent: "Hot",
+    intentScore: 9.6,
+    stage: "Booking",
+    followup: "in 12m",
     value: 6800,
-    createdAt: "3h ago",
   },
   {
     id: "LZ-2839",
     name: "Sofia Martinez",
+    company: "Iberia Studio",
+    initials: "SM",
+    avatarGrad: "from-fuchsia-300 to-rose-300",
     country: "Spain",
     flag: "🇪🇸",
     service: "Trademark Registration",
     intent: "Warm",
-    intentScore: 71,
-    followupHours: 8,
-    lawyer: "R. Iyer",
-    stage: "Documents",
+    intentScore: 7.1,
+    stage: "Docs Review",
+    followup: "tomorrow",
     value: 1800,
-    createdAt: "5h ago",
   },
   {
     id: "LZ-2838",
     name: "Mohammed Al-Hassan",
+    company: "Hassan Capital DMCC",
+    initials: "MA",
+    avatarGrad: "from-amber-200 to-emerald-300",
     country: "UAE",
     flag: "🇦🇪",
-    service: "Pvt Ltd + Compliance",
+    service: "Pvt. Ltd + Compliance",
     intent: "Hot",
-    intentScore: 88,
-    followupHours: 4,
-    lawyer: "A. Verma",
-    stage: "Booked",
+    intentScore: 8.8,
+    stage: "Booking",
+    followup: "today 4pm",
     value: 5400,
-    createdAt: "8h ago",
   },
   {
     id: "LZ-2837",
     name: "Priya Raghavan",
+    company: "Lotus Bay Pte",
+    initials: "PR",
+    avatarGrad: "from-pink-300 to-purple-300",
     country: "Singapore",
     flag: "🇸🇬",
-    service: "LLC Setup",
-    intent: "Closing",
-    intentScore: 94,
-    followupHours: 1,
-    lawyer: "S. Mehra",
-    stage: "Filing",
+    service: "International LLC",
+    intent: "Hot",
+    intentScore: 9.4,
+    stage: "Booking",
+    followup: "in 1h",
     value: 7200,
-    createdAt: "11h ago",
   },
   {
     id: "LZ-2836",
     name: "Lucas Almeida",
+    company: "Verde Markets",
+    initials: "LA",
+    avatarGrad: "from-emerald-300 to-cyan-300",
     country: "Brazil",
     flag: "🇧🇷",
     service: "Compliance Audit",
     intent: "Warm",
-    intentScore: 64,
-    followupHours: 14,
-    lawyer: "P. Khanna",
-    stage: "Inquiry",
+    intentScore: 6.4,
+    stage: "Discovery",
+    followup: "Fri 10am",
     value: 1200,
-    createdAt: "1d ago",
   },
   {
     id: "LZ-2835",
     name: "Emma Schmidt",
+    company: "Schmidt & Co GmbH",
+    initials: "ES",
+    avatarGrad: "from-indigo-300 to-fuchsia-300",
     country: "Germany",
     flag: "🇩🇪",
-    service: "Pvt Ltd Registration",
-    intent: "Hot",
-    intentScore: 85,
-    followupHours: 3,
-    lawyer: "R. Iyer",
-    stage: "Documents",
+    service: "Pvt. Ltd Registration",
+    intent: "Warm",
+    intentScore: 7.6,
+    stage: "Docs Review",
+    followup: "today 6pm",
     value: 3900,
-    createdAt: "1d ago",
   },
   {
     id: "LZ-2834",
     name: "Noah Williams",
+    company: "North Star Ventures",
+    initials: "NW",
+    avatarGrad: "from-sky-300 to-blue-300",
     country: "Canada",
     flag: "🇨🇦",
     service: "Trademark + Tax",
     intent: "Cold",
-    intentScore: 32,
-    followupHours: 36,
-    lawyer: "A. Verma",
-    stage: "Inquiry",
+    intentScore: 3.2,
+    stage: "Discovery",
+    followup: "next week",
     value: 800,
-    createdAt: "2d ago",
   },
-];
+]
 
-export const lawyerFreelancers = [
+export const geoBreakdown = [
+  { country: "United States", flag: "🇺🇸", clients: 312, revenue: 184 },
+  { country: "United Kingdom", flag: "🇬🇧", clients: 248, revenue: 142 },
+  { country: "Singapore", flag: "🇸🇬", clients: 196, revenue: 118 },
+  { country: "United Arab Emirates", flag: "🇦🇪", clients: 162, revenue: 96 },
+  { country: "India", flag: "🇮🇳", clients: 148, revenue: 72 },
+  { country: "Germany", flag: "🇩🇪", clients: 124, revenue: 64 },
+  { country: "Australia", flag: "🇦🇺", clients: 98, revenue: 51 },
+]
+
+export const lawyers = [
   {
     name: "Sneha Mehra",
-    role: "Corporate Law",
+    initials: "SM",
+    avatarGrad: "from-rose-300 to-amber-200",
+    specialty: "Corporate Law",
+    region: "APAC",
     rating: 4.9,
     cases: 142,
-    online: true,
-    color: "from-orange-400 to-pink-500",
+    revenue: 86,
+    status: "Available",
   },
   {
     name: "Pranav Khanna",
-    role: "Tax & Compliance",
+    initials: "PK",
+    avatarGrad: "from-cyan-300 to-indigo-300",
+    specialty: "Tax & Compliance",
+    region: "EU",
     rating: 4.8,
     cases: 118,
-    online: true,
-    color: "from-cyan-400 to-blue-500",
+    revenue: 71,
+    status: "Available",
   },
   {
     name: "Riya Iyer",
-    role: "IP & Trademarks",
+    initials: "RI",
+    avatarGrad: "from-amber-200 to-rose-300",
+    specialty: "IP & Trademarks",
+    region: "Global",
     rating: 4.9,
     cases: 96,
-    online: false,
-    color: "from-amber-400 to-orange-500",
+    revenue: 58,
+    status: "Busy",
   },
   {
     name: "Arjun Verma",
-    role: "International Reg.",
+    initials: "AV",
+    avatarGrad: "from-fuchsia-300 to-rose-300",
+    specialty: "International Reg.",
+    region: "MENA",
     rating: 5.0,
     cases: 173,
-    online: true,
-    color: "from-pink-400 to-rose-500",
+    revenue: 104,
+    status: "Available",
   },
-];
+  {
+    name: "Lena Park",
+    initials: "LP",
+    avatarGrad: "from-emerald-300 to-cyan-300",
+    specialty: "Cross-border M&A",
+    region: "APAC",
+    rating: 4.9,
+    cases: 88,
+    revenue: 62,
+    status: "Available",
+  },
+  {
+    name: "Mateus Rocha",
+    initials: "MR",
+    avatarGrad: "from-indigo-300 to-fuchsia-300",
+    specialty: "LATAM Compliance",
+    region: "LATAM",
+    rating: 4.7,
+    cases: 74,
+    revenue: 44,
+    status: "Busy",
+  },
+]
 
-export const recentBookings = [
-  { time: "09:00", client: "Aiko Tanaka", topic: "Pvt Ltd Filing Review", duration: "45m" },
-  { time: "10:30", client: "Daniel O'Connor", topic: "LLC Documentation", duration: "60m" },
-  { time: "12:15", client: "Priya Raghavan", topic: "Singapore Filing Sync", duration: "30m" },
-  { time: "14:00", client: "Mohammed Al-Hassan", topic: "Compliance Audit", duration: "60m" },
-  { time: "16:30", client: "Sofia Martinez", topic: "Trademark Strategy", duration: "45m" },
-];
+export const transactions = [
+  { id: "TX-9482", client: "Aiko Tanaka", service: "Pvt. Ltd Registration", amount: 599, status: "Paid", flag: "🇯🇵" },
+  { id: "TX-9481", client: "Daniel O'Connor", service: "International LLC", amount: 899, status: "Paid", flag: "🇮🇪" },
+  { id: "TX-9480", client: "Priya Raghavan", service: "Lawyer Consultation", amount: 149, status: "Paid", flag: "🇸🇬" },
+  { id: "TX-9479", client: "Mohammed Al-Hassan", service: "Legal Site Booking", amount: 249, status: "Pending", flag: "🇦🇪" },
+  { id: "TX-9478", client: "Emma Schmidt", service: "Pvt. Ltd Registration", amount: 599, status: "Paid", flag: "🇩🇪" },
+  { id: "TX-9477", client: "Sofia Martinez", service: "Trademark Filing", amount: 329, status: "Pending", flag: "🇪🇸" },
+]

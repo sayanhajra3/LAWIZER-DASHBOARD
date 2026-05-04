@@ -42,7 +42,7 @@ export function Sidebar() {
           <span className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-cyan-300 ring-2 ring-[#0a0418]" />
         </div>
         <div>
-          <p className="font-display text-lg font-bold leading-none tracking-tight">
+          <p className="font-serif text-2xl leading-none tracking-tight">
             Lawizer
           </p>
           <p className="text-[10px] uppercase tracking-[0.18em] text-white/50">
@@ -97,7 +97,7 @@ export function Sidebar() {
           className="absolute -bottom-10 -left-10 h-28 w-28 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 opacity-50 blur-2xl"
         />
         <Sparkles className="h-5 w-5 text-orange-200" />
-        <p className="mt-3 font-display text-base font-semibold leading-tight">
+        <p className="mt-3 font-serif text-lg leading-tight">
           Go Global with Lawizer Pro
         </p>
         <p className="mt-1 text-xs text-white/65 leading-relaxed">

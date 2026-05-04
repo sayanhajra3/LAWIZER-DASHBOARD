@@ -9,7 +9,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ["var(--font-inter)", "ui-sans-serif", "system-ui"],
-        display: ["var(--font-display)", "ui-sans-serif", "system-ui"],
+        serif: ["var(--font-serif)", "ui-serif", "Georgia", "serif"],
         mono: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       colors: {
