@@ -73,7 +73,7 @@ export function RevenueChart() {
                 color: "white",
                 fontSize: 12,
               }}
-              formatter={(v: number) => [`$${v.toLocaleString()}`, "Revenue"]}
+              formatter={(v) => [`$${Number(v).toLocaleString()}`, "Revenue"]}
             />
             <Bar dataKey="revenue" radius={[10, 10, 4, 4]}>
               {revenueSeries.map((_, i) => (
