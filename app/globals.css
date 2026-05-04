@@ -1,0 +1,295 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 20% 4%;
+    --foreground: 0 0% 98%;
+
+    --card: 240 20% 6%;
+    --card-foreground: 0 0% 98%;
+
+    --primary: 24 95% 60%;
+    --primary-foreground: 0 0% 100%;
+
+    --accent: 330 90% 65%;
+    --accent-foreground: 0 0% 100%;
+
+    --secondary: 190 95% 55%;
+    --secondary-foreground: 240 20% 4%;
+
+    --muted: 240 10% 20%;
+    --muted-foreground: 240 5% 70%;
+
+    --border: 0 0% 100%;
+    --ring: 24 95% 60%;
+
+    --radius: 1.25rem;
+  }
+
+  * {
+    border-color: hsl(var(--border) / 0.1);
+  }
+
+  html,
+  body {
+    background: #050414;
+    color: hsl(var(--foreground));
+    min-height: 100vh;
+  }
+
+  body {
+    font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* ============ CRAZY ANIMATED GRADIENT BACKGROUND ============ */
+.aurora-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 60% at 10% 0%, rgba(255, 87, 51, 0.55) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 60% at 90% 10%, rgba(236, 72, 153, 0.5) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 80% 100%, rgba(6, 182, 212, 0.55) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 60% at 20% 90%, rgba(251, 191, 36, 0.45) 0%, transparent 55%),
+    linear-gradient(135deg, #0a0418 0%, #100828 50%, #050414 100%);
+}
+
+.aurora-bg::before,
+.aurora-bg::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 102, 51, 0.45), transparent 35%),
+    radial-gradient(circle at 70% 60%, rgba(236, 72, 153, 0.4), transparent 35%),
+    radial-gradient(circle at 50% 80%, rgba(6, 182, 212, 0.4), transparent 35%);
+  filter: blur(80px);
+  animation: auroraDrift 22s ease-in-out infinite;
+  mix-blend-mode: screen;
+}
+
+.aurora-bg::after {
+  animation-duration: 32s;
+  animation-direction: reverse;
+  background:
+    radial-gradient(circle at 60% 20%, rgba(251, 191, 36, 0.35), transparent 35%),
+    radial-gradient(circle at 20% 70%, rgba(168, 85, 247, 0.4), transparent 35%),
+    radial-gradient(circle at 85% 85%, rgba(59, 130, 246, 0.4), transparent 35%);
+}
+
+@keyframes auroraDrift {
+  0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  25%      { transform: translate(4%, -3%) rotate(8deg) scale(1.08); }
+  50%      { transform: translate(-3%, 4%) rotate(-6deg) scale(1.12); }
+  75%      { transform: translate(3%, 3%) rotate(4deg) scale(1.05); }
+}
+
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/></svg>");
+  mix-blend-mode: overlay;
+}
+
+/* ============ GLASSMORPHISM ============ */
+.glass {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.03) 50%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.04),
+    0 8px 40px rgba(0, 0, 0, 0.35);
+}
+
+.glass-strong {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 12px 50px rgba(0, 0, 0, 0.4);
+}
+
+.glass-dark {
+  background: rgba(10, 6, 30, 0.55);
+  backdrop-filter: blur(32px) saturate(160%);
+  -webkit-backdrop-filter: blur(32px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Subtle inner highlight stroke for premium feel */
+.glass-edge {
+  position: relative;
+}
+.glass-edge::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.05) 30%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0.15) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ============ LIQUID BUTTON ============ */
+.liquid-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  color: white;
+  border-radius: 9999px;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: linear-gradient(135deg, #ff5733, #ec4899 50%, #06b6d4);
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+              background-position 0.8s ease,
+              box-shadow 0.4s ease;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -2px 8px rgba(0, 0, 0, 0.25),
+    0 8px 24px rgba(236, 72, 153, 0.35),
+    0 4px 12px rgba(255, 87, 51, 0.25);
+}
+
+.liquid-btn::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from 0deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.45) 20%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  animation: liquidSpin 4s linear infinite;
+}
+
+.liquid-btn::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.5) 0%,
+    transparent 30%
+  );
+  pointer-events: none;
+  transition: transform 0.6s ease;
+  z-index: 1;
+  mix-blend-mode: overlay;
+}
+
+.liquid-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  background-position: 100% 50%;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -2px 12px rgba(0, 0, 0, 0.3),
+    0 14px 40px rgba(236, 72, 153, 0.5),
+    0 6px 18px rgba(6, 182, 212, 0.4);
+}
+.liquid-btn:hover::before { opacity: 1; }
+.liquid-btn:hover::after { transform: translate(20%, 20%); }
+.liquid-btn:active { transform: translateY(0) scale(0.98); }
+
+.liquid-btn-ghost {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 4px 16px rgba(0, 0, 0, 0.2);
+}
+.liquid-btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 8px 24px rgba(255, 255, 255, 0.1);
+}
+
+@keyframes liquidSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* ============ Shimmer / scrollbar ============ */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #ffb37a 0%, #ff5e9c 50%, #6cd9ff 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+
+/* tiny ring pulse for status dots */
+@keyframes pulseRing {
+  0%   { box-shadow: 0 0 0 0 currentColor; opacity: 1; }
+  100% { box-shadow: 0 0 0 10px transparent; opacity: 0; }
+}
+.pulse-ring {
+  position: relative;
+}
+.pulse-ring::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  animation: pulseRing 1.8s ease-out infinite;
+}
