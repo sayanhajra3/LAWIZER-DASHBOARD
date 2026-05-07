@@ -17,9 +17,9 @@ const instrumentSerif = Instrument_Serif({
 })
 
 export const metadata: Metadata = {
-  title: "Lawizer — Global Legal Business Registration",
+  title: "Lawizer Client Dashboard — Legal Service Tracker",
   description:
-    "Lawizer command center: register companies, hire vetted lawyer freelancers, and book legal services for international clients.",
+    "Track all your active and completed legal filings — GST, Trademark, PAN, ITR, ROC compliance and more — with vetted lawyer freelancers.",
 }
 
 export const viewport: Viewport = {

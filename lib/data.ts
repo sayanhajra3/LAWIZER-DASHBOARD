@@ -1,291 +1,245 @@
-// Mock data for the Lawizer dashboard. In production this would come from your DB.
+// Lawizer Client Dashboard data — mirrors the spec from the reference screenshots.
+// In production this would come from your DB / API.
 
-export const kpis = [
+export type ServiceStatus = "in_progress" | "completed" | "action_required"
+export type ServiceCategory =
+  | "Startup & Business"
+  | "Brand Protection"
+  | "Tax Registration"
+  | "Tax Filing"
+  | "Documentation"
+  | "Compliance"
+
+export type WorkflowStep = {
+  id: string
+  title: string
+  description: string
+  status: "done" | "current" | "pending" | "blocked"
+  completedAt?: string
+}
+
+export type Service = {
+  id: string
+  category: ServiceCategory
+  title: string
+  status: ServiceStatus
+  progress: number
+  currentStepLabel: string
+  stepIndex: number
+  totalSteps: number
+  startedAt?: string
+  completedAt?: string
+  warningNote?: string
+  primaryAction: { label: string; href: string }
+  assignedLawyerId?: string
+  amount?: number
+  steps: WorkflowStep[]
+}
+
+export const client = {
+  name: "Rahul Sharma",
+  clientId: "LWZ-2034-0042",
+  email: "rahul.sharma@northstone.co",
+  company: "Northstone Ventures Pvt. Ltd.",
+  country: "India",
+  joinedAt: "12 Jan 2026",
+  avatarInitials: "RS",
+}
+
+export const services: Service[] = [
   {
-    label: "New Clients",
-    value: "1,284",
-    delta: 18.4,
-    icon: "users",
-    spark:
-      "M0 24 L10 22 L20 20 L30 22 L40 16 L50 18 L60 12 L70 14 L80 8 L90 10 L100 6 L110 4 L120 2",
+    id: "gst-registration",
+    category: "Startup & Business",
+    title: "GST Registration",
+    status: "in_progress",
+    progress: 60,
+    currentStepLabel: "Document Verification — Step 3 of 5",
+    stepIndex: 3,
+    totalSteps: 5,
+    startedAt: "12 Jan 2026",
+    primaryAction: { label: "View Workflow", href: "#" },
+    assignedLawyerId: "lw-1",
+    amount: 4999,
+    steps: [
+      { id: "s1", title: "Application initiated", description: "GST REG-01 submitted on the portal.", status: "done", completedAt: "12 Jan 2026" },
+      { id: "s2", title: "KYC & PAN linked", description: "Director PAN and Aadhaar verified via OTP.", status: "done", completedAt: "13 Jan 2026" },
+      { id: "s3", title: "Document Verification", description: "Address proof, board resolution and bank statement under review by GSTN officer.", status: "current" },
+      { id: "s4", title: "ARN & GSTIN issuance", description: "Allocation of Application Reference Number and GSTIN.", status: "pending" },
+      { id: "s5", title: "Certificate delivery", description: "Final GST Registration Certificate delivered to your vault.", status: "pending" },
+    ],
   },
   {
-    label: "Hot Intent",
-    value: "342",
-    delta: 24.1,
-    icon: "flame",
-    spark:
-      "M0 22 L10 18 L20 20 L30 14 L40 16 L50 10 L60 12 L70 6 L80 8 L90 4 L100 6 L110 2 L120 4",
+    id: "trademark-registration",
+    category: "Brand Protection",
+    title: "Trademark Registration",
+    status: "in_progress",
+    progress: 40,
+    currentStepLabel: "TM-48 Application Filed — Step 2 of 5",
+    stepIndex: 2,
+    totalSteps: 5,
+    startedAt: "08 Jan 2026",
+    primaryAction: { label: "View Workflow", href: "#" },
+    assignedLawyerId: "lw-2",
+    amount: 7499,
+    steps: [
+      { id: "s1", title: "Trademark search", description: "Public register search for conflicts in classes 35 & 42.", status: "done", completedAt: "08 Jan 2026" },
+      { id: "s2", title: "TM-48 Application Filed", description: "Authorization of agent (TM-48) executed and uploaded.", status: "current" },
+      { id: "s3", title: "Examination report", description: "Awaiting examiner's report from the Trade Marks Registry.", status: "pending" },
+      { id: "s4", title: "Journal publication", description: "Mark advertised for opposition window of 4 months.", status: "pending" },
+      { id: "s5", title: "Registration certificate", description: "Final TM certificate issued and delivered.", status: "pending" },
+    ],
   },
   {
-    label: "Avg Follow-up",
-    value: "4h 12m",
-    delta: -12.6,
-    icon: "clock",
-    spark:
-      "M0 8 L10 12 L20 10 L30 14 L40 12 L50 16 L60 14 L70 18 L80 16 L90 20 L100 18 L110 22 L120 20",
+    id: "pan-application",
+    category: "Tax Registration",
+    title: "PAN Application — Firm",
+    status: "action_required",
+    progress: 25,
+    currentStepLabel: "Waiting for Partnership Deed upload",
+    stepIndex: 2,
+    totalSteps: 4,
+    startedAt: "15 Jan 2026",
+    warningNote: "Upload signed Partnership Deed to continue.",
+    primaryAction: { label: "Upload Document", href: "#" },
+    assignedLawyerId: "lw-1",
+    amount: 1499,
+    steps: [
+      { id: "s1", title: "Form 49A drafted", description: "Application drafted with firm details.", status: "done", completedAt: "15 Jan 2026" },
+      { id: "s2", title: "Awaiting Partnership Deed", description: "Signed and notarized Partnership Deed required to proceed.", status: "blocked" },
+      { id: "s3", title: "Submission to NSDL", description: "Form 49A and supporting documents filed with NSDL.", status: "pending" },
+      { id: "s4", title: "PAN allotment", description: "PAN issued and dispatched.", status: "pending" },
+    ],
   },
   {
-    label: "Revenue (MTD)",
-    value: "$92.4K",
-    delta: 31.7,
-    icon: "wallet",
-    spark:
-      "M0 28 L10 24 L20 22 L30 18 L40 20 L50 14 L60 12 L70 10 L80 8 L90 6 L100 4 L110 6 L120 2",
+    id: "itr-5-filing",
+    category: "Tax Filing",
+    title: "ITR-5 Filing (FY 2023-24)",
+    status: "completed",
+    progress: 100,
+    currentStepLabel: "All steps done — Acknowledgement received",
+    stepIndex: 4,
+    totalSteps: 4,
+    startedAt: "21 Dec 2025",
+    completedAt: "10 Jan 2026",
+    primaryAction: { label: "Download Ack", href: "#" },
+    assignedLawyerId: "lw-3",
+    amount: 3999,
+    steps: [
+      { id: "s1", title: "Books reconciled", description: "P&L and Balance Sheet finalized.", status: "done", completedAt: "26 Dec 2025" },
+      { id: "s2", title: "Computation prepared", description: "Tax computation and disclosures drafted.", status: "done", completedAt: "02 Jan 2026" },
+      { id: "s3", title: "Return filed", description: "ITR-5 filed on the income tax portal.", status: "done", completedAt: "08 Jan 2026" },
+      { id: "s4", title: "Acknowledgement received", description: "ITR-V received and e-verified.", status: "done", completedAt: "10 Jan 2026" },
+    ],
+  },
+  {
+    id: "rent-agreement",
+    category: "Documentation",
+    title: "Rent Agreement Drafting",
+    status: "completed",
+    progress: 100,
+    currentStepLabel: "Draft delivered, signed and shared",
+    stepIndex: 3,
+    totalSteps: 3,
+    startedAt: "02 Jan 2026",
+    completedAt: "06 Jan 2026",
+    primaryAction: { label: "View Document", href: "#" },
+    assignedLawyerId: "lw-2",
+    amount: 1999,
+    steps: [
+      { id: "s1", title: "Brief & clauses", description: "Lease terms, security deposit and lock-in negotiated.", status: "done", completedAt: "03 Jan 2026" },
+      { id: "s2", title: "Draft delivered", description: "Lawyer-vetted draft shared on portal.", status: "done", completedAt: "05 Jan 2026" },
+      { id: "s3", title: "Signed & shared", description: "e-Stamped, signed and stored in your vault.", status: "done", completedAt: "06 Jan 2026" },
+    ],
+  },
+  {
+    id: "annual-compliance",
+    category: "Compliance",
+    title: "Annual ROC Compliance",
+    status: "in_progress",
+    progress: 15,
+    currentStepLabel: "Data collection — Step 1 of 6",
+    stepIndex: 1,
+    totalSteps: 6,
+    startedAt: "20 Jan 2026",
+    primaryAction: { label: "View Workflow", href: "#" },
+    assignedLawyerId: "lw-3",
+    amount: 8999,
+    steps: [
+      { id: "s1", title: "Data collection", description: "Financials, registers and minutes being gathered.", status: "current" },
+      { id: "s2", title: "AOC-4 preparation", description: "Financial statements form drafting.", status: "pending" },
+      { id: "s3", title: "MGT-7 preparation", description: "Annual return drafting.", status: "pending" },
+      { id: "s4", title: "Director approvals", description: "Board sign-offs and DSC affixation.", status: "pending" },
+      { id: "s5", title: "ROC filing", description: "Filings submitted to Ministry of Corporate Affairs.", status: "pending" },
+      { id: "s6", title: "Receipts archived", description: "Challans saved to vault.", status: "pending" },
+    ],
   },
 ]
 
-export const performanceSeries = [
-  { month: "Jan", registrations: 84, bookings: 62, matches: 41 },
-  { month: "Feb", registrations: 96, bookings: 71, matches: 48 },
-  { month: "Mar", registrations: 112, bookings: 84, matches: 57 },
-  { month: "Apr", registrations: 128, bookings: 98, matches: 64 },
-  { month: "May", registrations: 142, bookings: 110, matches: 73 },
-  { month: "Jun", registrations: 158, bookings: 124, matches: 84 },
-  { month: "Jul", registrations: 174, bookings: 138, matches: 92 },
-  { month: "Aug", registrations: 192, bookings: 154, matches: 104 },
-  { month: "Sep", registrations: 214, bookings: 172, matches: 118 },
-  { month: "Oct", registrations: 238, bookings: 192, matches: 132 },
-  { month: "Nov", registrations: 262, bookings: 214, matches: 148 },
-  { month: "Dec", registrations: 294, bookings: 242, matches: 168 },
+export type Lawyer = {
+  id: string
+  name: string
+  specialty: string
+  rating: number
+  cases: number
+  online: boolean
+  avatar: string
+  region: string
+}
+
+export const lawyers: Lawyer[] = [
+  { id: "lw-1", name: "Adv. Priya Menon", specialty: "Tax & GST", rating: 4.9, cases: 142, online: true, avatar: "PM", region: "Mumbai, IN" },
+  { id: "lw-2", name: "Adv. Karan Bhatia", specialty: "IP & Trademarks", rating: 4.8, cases: 96, online: true, avatar: "KB", region: "Bengaluru, IN" },
+  { id: "lw-3", name: "CA Neha Iyer", specialty: "Corporate Compliance", rating: 4.95, cases: 211, online: false, avatar: "NI", region: "Delhi, IN" },
 ]
 
-export const revenueSeries = [
-  { month: "Jan", revenue: 18400 },
-  { month: "Feb", revenue: 21200 },
-  { month: "Mar", revenue: 19800 },
-  { month: "Apr", revenue: 25600 },
-  { month: "May", revenue: 28900 },
-  { month: "Jun", revenue: 31200 },
-  { month: "Jul", revenue: 34800 },
-  { month: "Aug", revenue: 39200 },
-  { month: "Sep", revenue: 42100 },
-  { month: "Oct", revenue: 46800 },
-  { month: "Nov", revenue: 51200 },
-  { month: "Dec", revenue: 56400 },
+export type ClientDocument = {
+  id: string
+  name: string
+  service: string
+  uploadedAt: string
+  size: string
+  kind: string
+}
+
+export const documents: ClientDocument[] = [
+  { id: "d1", name: "Certificate_of_Incorporation.pdf", service: "Annual ROC Compliance", uploadedAt: "12 Jan 2026", size: "412 KB", kind: "Certificate" },
+  { id: "d2", name: "ITR-V_FY2023-24.pdf", service: "ITR-5 Filing", uploadedAt: "10 Jan 2026", size: "188 KB", kind: "Acknowledgement" },
+  { id: "d3", name: "Rent_Agreement_Signed.pdf", service: "Rent Agreement Drafting", uploadedAt: "06 Jan 2026", size: "1.2 MB", kind: "Agreement" },
+  { id: "d4", name: "Trademark_Search_Report.pdf", service: "Trademark Registration", uploadedAt: "08 Jan 2026", size: "642 KB", kind: "Report" },
+  { id: "d5", name: "GST_Application_Receipt.pdf", service: "GST Registration", uploadedAt: "12 Jan 2026", size: "94 KB", kind: "Receipt" },
 ]
 
-export const intentDistribution = [
-  { label: "Hot — ready to file", count: 342, percent: 38, color: "#fb7185" },
-  { label: "Warm — comparing", count: 248, percent: 27, color: "#fcd34d" },
-  { label: "Closing — in pipeline", count: 162, percent: 18, color: "#f0abfc" },
-  { label: "Cold — early research", count: 154, percent: 17, color: "#67e8f9" },
+export type Invoice = {
+  id: string
+  service: string
+  amount: number
+  status: "Paid" | "Due" | "Pending"
+  issuedAt: string
+}
+
+export const invoices: Invoice[] = [
+  { id: "INV-2026-0042-01", service: "GST Registration", amount: 4999, status: "Paid", issuedAt: "12 Jan 2026" },
+  { id: "INV-2026-0042-02", service: "Trademark Registration", amount: 7499, status: "Paid", issuedAt: "08 Jan 2026" },
+  { id: "INV-2026-0042-03", service: "PAN Application", amount: 1499, status: "Due", issuedAt: "15 Jan 2026" },
+  { id: "INV-2026-0042-04", service: "Annual ROC Compliance", amount: 8999, status: "Due", issuedAt: "20 Jan 2026" },
+  { id: "INV-2026-0042-05", service: "Rent Agreement Drafting", amount: 1999, status: "Paid", issuedAt: "02 Jan 2026" },
 ]
 
-export const followupBuckets = [
-  { label: "< 1h", value: "412" },
-  { label: "1–4h", value: "286" },
-  { label: "4–24h", value: "147" },
-  { label: "24h+", value: "61" },
-]
+export const stats = {
+  inProgress: services.filter((s) => s.status === "in_progress").length,
+  completed: services.filter((s) => s.status === "completed").length,
+  actionRequired: services.filter((s) => s.status === "action_required").length,
+}
 
-export const leads = [
-  {
-    id: "LZ-2841",
-    name: "Aiko Tanaka",
-    company: "Sakura Holdings KK",
-    initials: "AT",
-    avatarGrad: "from-rose-300 to-amber-200",
-    country: "Japan",
-    flag: "🇯🇵",
-    service: "Pvt. Ltd Registration",
-    intent: "Hot",
-    intentScore: 9.2,
-    stage: "Lawyer Match",
-    followup: "in 38m",
-    value: 4200,
-  },
-  {
-    id: "LZ-2840",
-    name: "Daniel O'Connor",
-    company: "Atlantic Forge LLC",
-    initials: "DO",
-    avatarGrad: "from-cyan-300 to-indigo-300",
-    country: "Ireland",
-    flag: "🇮🇪",
-    service: "International LLC + Tax",
-    intent: "Hot",
-    intentScore: 9.6,
-    stage: "Booking",
-    followup: "in 12m",
-    value: 6800,
-  },
-  {
-    id: "LZ-2839",
-    name: "Sofia Martinez",
-    company: "Iberia Studio",
-    initials: "SM",
-    avatarGrad: "from-fuchsia-300 to-rose-300",
-    country: "Spain",
-    flag: "🇪🇸",
-    service: "Trademark Registration",
-    intent: "Warm",
-    intentScore: 7.1,
-    stage: "Docs Review",
-    followup: "tomorrow",
-    value: 1800,
-  },
-  {
-    id: "LZ-2838",
-    name: "Mohammed Al-Hassan",
-    company: "Hassan Capital DMCC",
-    initials: "MA",
-    avatarGrad: "from-amber-200 to-emerald-300",
-    country: "UAE",
-    flag: "🇦🇪",
-    service: "Pvt. Ltd + Compliance",
-    intent: "Hot",
-    intentScore: 8.8,
-    stage: "Booking",
-    followup: "today 4pm",
-    value: 5400,
-  },
-  {
-    id: "LZ-2837",
-    name: "Priya Raghavan",
-    company: "Lotus Bay Pte",
-    initials: "PR",
-    avatarGrad: "from-pink-300 to-purple-300",
-    country: "Singapore",
-    flag: "🇸🇬",
-    service: "International LLC",
-    intent: "Hot",
-    intentScore: 9.4,
-    stage: "Booking",
-    followup: "in 1h",
-    value: 7200,
-  },
-  {
-    id: "LZ-2836",
-    name: "Lucas Almeida",
-    company: "Verde Markets",
-    initials: "LA",
-    avatarGrad: "from-emerald-300 to-cyan-300",
-    country: "Brazil",
-    flag: "🇧🇷",
-    service: "Compliance Audit",
-    intent: "Warm",
-    intentScore: 6.4,
-    stage: "Discovery",
-    followup: "Fri 10am",
-    value: 1200,
-  },
-  {
-    id: "LZ-2835",
-    name: "Emma Schmidt",
-    company: "Schmidt & Co GmbH",
-    initials: "ES",
-    avatarGrad: "from-indigo-300 to-fuchsia-300",
-    country: "Germany",
-    flag: "🇩🇪",
-    service: "Pvt. Ltd Registration",
-    intent: "Warm",
-    intentScore: 7.6,
-    stage: "Docs Review",
-    followup: "today 6pm",
-    value: 3900,
-  },
-  {
-    id: "LZ-2834",
-    name: "Noah Williams",
-    company: "North Star Ventures",
-    initials: "NW",
-    avatarGrad: "from-sky-300 to-blue-300",
-    country: "Canada",
-    flag: "🇨🇦",
-    service: "Trademark + Tax",
-    intent: "Cold",
-    intentScore: 3.2,
-    stage: "Discovery",
-    followup: "next week",
-    value: 800,
-  },
-]
+export type SupportTicket = {
+  id: string
+  subject: string
+  status: "Open" | "Awaiting client" | "Resolved"
+  updatedAt: string
+}
 
-export const geoBreakdown = [
-  { country: "United States", flag: "🇺🇸", clients: 312, revenue: 184 },
-  { country: "United Kingdom", flag: "🇬🇧", clients: 248, revenue: 142 },
-  { country: "Singapore", flag: "🇸🇬", clients: 196, revenue: 118 },
-  { country: "United Arab Emirates", flag: "🇦🇪", clients: 162, revenue: 96 },
-  { country: "India", flag: "🇮🇳", clients: 148, revenue: 72 },
-  { country: "Germany", flag: "🇩🇪", clients: 124, revenue: 64 },
-  { country: "Australia", flag: "🇦🇺", clients: 98, revenue: 51 },
-]
-
-export const lawyers = [
-  {
-    name: "Sneha Mehra",
-    initials: "SM",
-    avatarGrad: "from-rose-300 to-amber-200",
-    specialty: "Corporate Law",
-    region: "APAC",
-    rating: 4.9,
-    cases: 142,
-    revenue: 86,
-    status: "Available",
-  },
-  {
-    name: "Pranav Khanna",
-    initials: "PK",
-    avatarGrad: "from-cyan-300 to-indigo-300",
-    specialty: "Tax & Compliance",
-    region: "EU",
-    rating: 4.8,
-    cases: 118,
-    revenue: 71,
-    status: "Available",
-  },
-  {
-    name: "Riya Iyer",
-    initials: "RI",
-    avatarGrad: "from-amber-200 to-rose-300",
-    specialty: "IP & Trademarks",
-    region: "Global",
-    rating: 4.9,
-    cases: 96,
-    revenue: 58,
-    status: "Busy",
-  },
-  {
-    name: "Arjun Verma",
-    initials: "AV",
-    avatarGrad: "from-fuchsia-300 to-rose-300",
-    specialty: "International Reg.",
-    region: "MENA",
-    rating: 5.0,
-    cases: 173,
-    revenue: 104,
-    status: "Available",
-  },
-  {
-    name: "Lena Park",
-    initials: "LP",
-    avatarGrad: "from-emerald-300 to-cyan-300",
-    specialty: "Cross-border M&A",
-    region: "APAC",
-    rating: 4.9,
-    cases: 88,
-    revenue: 62,
-    status: "Available",
-  },
-  {
-    name: "Mateus Rocha",
-    initials: "MR",
-    avatarGrad: "from-indigo-300 to-fuchsia-300",
-    specialty: "LATAM Compliance",
-    region: "LATAM",
-    rating: 4.7,
-    cases: 74,
-    revenue: 44,
-    status: "Busy",
-  },
-]
-
-export const transactions = [
-  { id: "TX-9482", client: "Aiko Tanaka", service: "Pvt. Ltd Registration", amount: 599, status: "Paid", flag: "🇯🇵" },
-  { id: "TX-9481", client: "Daniel O'Connor", service: "International LLC", amount: 899, status: "Paid", flag: "🇮🇪" },
-  { id: "TX-9480", client: "Priya Raghavan", service: "Lawyer Consultation", amount: 149, status: "Paid", flag: "🇸🇬" },
-  { id: "TX-9479", client: "Mohammed Al-Hassan", service: "Legal Site Booking", amount: 249, status: "Pending", flag: "🇦🇪" },
-  { id: "TX-9478", client: "Emma Schmidt", service: "Pvt. Ltd Registration", amount: 599, status: "Paid", flag: "🇩🇪" },
-  { id: "TX-9477", client: "Sofia Martinez", service: "Trademark Filing", amount: 329, status: "Pending", flag: "🇪🇸" },
+export const supportTickets: SupportTicket[] = [
+  { id: "TKT-2026-118", subject: "Need clarification on GST step 3", status: "Open", updatedAt: "20 Jan 2026" },
+  { id: "TKT-2026-104", subject: "Trademark class question", status: "Awaiting client", updatedAt: "18 Jan 2026" },
+  { id: "TKT-2026-091", subject: "Rent agreement amendment", status: "Resolved", updatedAt: "07 Jan 2026" },
 ]
