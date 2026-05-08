@@ -1,6 +1,7 @@
 "use client"
 
 import { Sidebar } from "@/components/sidebar"
+import { AuthGuard } from "@/components/auth-guard"
 import { Bell, MessageCircle, Phone, Mail, HelpCircle } from "lucide-react"
 import { client } from "@/lib/data"
 import { TalkToExpert } from "@/components/talk-to-expert"
@@ -26,8 +27,9 @@ const faqs = [
 
 export default function SupportPage() {
   return (
-    <div className="min-h-screen bg-background">
-      <Sidebar />
+    <AuthGuard>
+      <div className="min-h-screen bg-background">
+        <Sidebar />
       
       <main className="ml-64 min-h-screen p-8">
         <div className="mx-auto max-w-6xl">
