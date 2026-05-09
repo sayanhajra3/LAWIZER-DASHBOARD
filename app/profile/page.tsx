@@ -1,15 +1,16 @@
 "use client"
 
 import { Sidebar } from "@/components/sidebar"
+import { AuthGuard } from "@/components/auth-guard"
 import { Bell, User, Mail, Phone, Building, Calendar } from "lucide-react"
 import { client } from "@/lib/data"
 
 export default function ProfilePage() {
   return (
-    <div className="min-h-screen bg-background">
-      <Sidebar />
-      
-      <main className="ml-64 min-h-screen p-8">
+    <AuthGuard>
+      <div className="min-h-screen bg-background">
+        <Sidebar />
+        <main className="ml-64 min-h-screen p-8">
         <div className="mx-auto max-w-6xl">
           {/* Header */}
           <header className="flex items-center justify-between">
@@ -93,7 +94,8 @@ export default function ProfilePage() {
             </div>
           </div>
         </div>
-      </main>
-    </div>
+        </main>
+      </div>
+    </AuthGuard>
   )
 }
