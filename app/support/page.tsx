@@ -103,10 +103,10 @@ export default function SupportPage() {
               ))}
             </div>
           </section>
-          </div>
-        </section>
-      </main>
-      <TalkToExpert />
+        </div>
+        </main>
+        <TalkToExpert />
+      </div>
     </AuthGuard>
   )
 }
