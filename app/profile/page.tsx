@@ -7,6 +7,7 @@ import { client } from "@/lib/data"
 
 export default function ProfilePage() {
   return (
+    <div>
     <AuthGuard>
       <div className="min-h-screen bg-background">
         <Sidebar />
@@ -97,5 +98,6 @@ export default function ProfilePage() {
         </main>
       </div>
     </AuthGuard>
+    </div>
   )
 }
