@@ -2,38 +2,67 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
+import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, updateProfile } from "firebase/auth"
 import { auth } from "@/lib/firebase"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Scale, Mail, Lock, Loader2 } from "lucide-react"
+import { Scale, Mail, Lock, Loader2, User } from "lucide-react"
 import Link from "next/link"
 
-export default function LoginPage() {
+export default function SignUpPage() {
+  const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const router = useRouter()
 
-  const handleEmailLogin = async (e: React.FormEvent) => {
+  const handleEmailSignUp = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.")
+      return
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters.")
+      return
+    }
+
     setLoading(true)
 
     try {
-      await signInWithEmailAndPassword(auth, email, password)
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+      if (name && userCredential.user) {
+        await updateProfile(userCredential.user, { displayName: name })
+      }
       router.push("/")
-    } catch (err) {
-      setError("Invalid email or password. Please try again.")
+    } catch (err: unknown) {
+      if (err instanceof Error && "code" in err) {
+        const firebaseError = err as { code: string }
+        if (firebaseError.code === "auth/email-already-in-use") {
+          setError("An account with this email already exists.")
+        } else if (firebaseError.code === "auth/invalid-email") {
+          setError("Invalid email address.")
+        } else if (firebaseError.code === "auth/weak-password") {
+          setError("Password is too weak. Please use a stronger password.")
+        } else {
+          setError("Failed to create account. Please try again.")
+        }
+      } else {
+        setError("Failed to create account. Please try again.")
+      }
     } finally {
       setLoading(false)
     }
   }
 
-  const handleGoogleLogin = async () => {
+  const handleGoogleSignUp = async () => {
     setError("")
     setLoading(true)
 
@@ -41,8 +70,8 @@ export default function LoginPage() {
       const provider = new GoogleAuthProvider()
       await signInWithPopup(auth, provider)
       router.push("/")
-    } catch (err) {
-      setError("Failed to sign in with Google. Please try again.")
+    } catch {
+      setError("Failed to sign up with Google. Please try again.")
     } finally {
       setLoading(false)
     }
@@ -56,14 +85,28 @@ export default function LoginPage() {
             <Scale className="h-7 w-7 text-primary-foreground" />
           </div>
           <div>
-            <CardTitle className="text-2xl font-bold">Welcome to Lawizer</CardTitle>
+            <CardTitle className="text-2xl font-bold">Create an Account</CardTitle>
             <CardDescription className="mt-2">
-              Sign in to access your legal service dashboard
+              Sign up to get started with Lawizer
             </CardDescription>
           </div>
         </CardHeader>
         <CardContent className="space-y-6">
-          <form onSubmit={handleEmailLogin} className="space-y-4">
+          <form onSubmit={handleEmailSignUp} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="name">Full Name</Label>
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="John Doe"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
+            </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <div className="relative">
@@ -86,9 +129,24 @@ export default function LoginPage() {
                 <Input
                   id="password"
                   type="password"
-                  placeholder="Enter your password"
+                  placeholder="Create a password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  className="pl-10"
+                  required
+                />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  placeholder="Confirm your password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                   className="pl-10"
                   required
                 />
@@ -101,10 +159,10 @@ export default function LoginPage() {
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Signing in...
+                  Creating account...
                 </>
               ) : (
-                "Sign in"
+                "Create Account"
               )}
             </Button>
           </form>
@@ -122,7 +180,7 @@ export default function LoginPage() {
             type="button"
             variant="outline"
             className="w-full"
-            onClick={handleGoogleLogin}
+            onClick={handleGoogleSignUp}
             disabled={loading}
           >
             <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
@@ -143,14 +201,14 @@ export default function LoginPage() {
                 fill="#EA4335"
               />
             </svg>
-            Sign in with Google
+            Sign up with Google
           </Button>
         </CardContent>
         <CardFooter className="flex justify-center border-t pt-6">
           <p className="text-sm text-muted-foreground">
-            Don&apos;t have an account?{" "}
-            <Link href="/signup" className="font-medium text-primary hover:underline">
-              Sign up
+            Already have an account?{" "}
+            <Link href="/login" className="font-medium text-primary hover:underline">
+              Sign in
             </Link>
           </p>
         </CardFooter>

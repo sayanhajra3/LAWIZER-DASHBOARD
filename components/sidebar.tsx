@@ -1,20 +1,33 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { LayoutGrid, FileText, Headphones, User, Phone } from "lucide-react"
+import { usePathname, useRouter } from "next/navigation"
+import { LayoutGrid, FileText, Headphones, User, Phone, LogOut, CreditCard } from "lucide-react"
 import { client } from "@/lib/data"
 import { cn } from "@/lib/utils"
+import { signOut } from "firebase/auth"
+import { auth } from "@/lib/firebase"
 
 const menuItems = [
   { label: "My Services", href: "/", icon: LayoutGrid },
   { label: "Documents", href: "/documents", icon: FileText },
+  { label: "Billing", href: "/billing", icon: CreditCard },
   { label: "Support & Help", href: "/support", icon: Headphones },
   { label: "Profile", href: "/profile", icon: User },
 ]
 
 export function Sidebar() {
   const pathname = usePathname()
+  const router = useRouter()
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth)
+      router.push("/login")
+    } catch (error) {
+      console.error("Logout failed:", error)
+    }
+  }
 
   return (
     <aside className="fixed left-0 top-0 z-40 flex h-screen w-64 flex-col bg-[#1a1f2e] text-white">
@@ -60,9 +73,18 @@ export function Sidebar() {
                 <span className="absolute bottom-1 left-12 h-0.5 w-5 rounded-full bg-[#38bdf8]" />
               )}
             </Link>
-          )
-        })}
-      </nav>
+            )
+          })}
+
+          {/* Logout Button */}
+          <button
+            onClick={handleLogout}
+            className="mt-4 flex w-full items-center gap-3 rounded-lg px-3 py-3 text-[15px] font-medium text-gray-300 transition-colors hover:bg-[#252b3b] hover:text-white"
+          >
+            <LogOut className="h-5 w-5" />
+            Logout
+          </button>
+        </nav>
 
       {/* Help CTA */}
       <div className="m-4 rounded-xl bg-[#f97316] p-4">
