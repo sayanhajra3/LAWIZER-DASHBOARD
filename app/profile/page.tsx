@@ -10,8 +10,7 @@ export default function ProfilePage() {
     <AuthGuard>
       <div className="min-h-screen bg-background">
         <Sidebar />
-      
-      <main className="ml-64 min-h-screen p-8">
+        <main className="ml-64 min-h-screen p-8">
         <div className="mx-auto max-w-6xl">
           {/* Header */}
           <header className="flex items-center justify-between">
@@ -95,7 +94,8 @@ export default function ProfilePage() {
             </div>
           </div>
         </div>
-      </main>
-    </div>
+        </main>
+      </div>
+    </AuthGuard>
   )
 }

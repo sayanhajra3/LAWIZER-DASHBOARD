@@ -30,8 +30,7 @@ export default function SupportPage() {
     <AuthGuard>
       <div className="min-h-screen bg-background">
         <Sidebar />
-      
-      <main className="ml-64 min-h-screen p-8">
+        <main className="ml-64 min-h-screen p-8">
         <div className="mx-auto max-w-6xl">
           {/* Header */}
           <header className="flex items-center justify-between">
@@ -105,8 +104,7 @@ export default function SupportPage() {
             </div>
           </section>
         </div>
-      </main>
-
+        </main>
         <TalkToExpert />
       </div>
     </AuthGuard>
