@@ -92,6 +92,5 @@ export default function HomePage() {
 
       {/* Floating CTA */}
       <TalkToExpert />
-    </div>
   )
 }
