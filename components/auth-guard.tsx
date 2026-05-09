@@ -3,7 +3,7 @@
 import { useEffect, useState, type ReactNode } from "react"
 import { useRouter } from "next/navigation"
 import { onAuthStateChanged, type User } from "firebase/auth"
-import { auth } from "@/lib/firebase"
+import { auth as getAuth } from "@/lib/firebase"
 import { Loader2 } from "lucide-react"
 
 interface AuthGuardProps {
@@ -16,7 +16,7 @@ export function AuthGuard({ children }: AuthGuardProps) {
   const router = useRouter()
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(getAuth(), (currentUser) => {
       if (!currentUser) {
         router.push("/login")
       } else {

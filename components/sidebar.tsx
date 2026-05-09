@@ -6,7 +6,7 @@ import { LayoutGrid, FileText, Headphones, User, Phone, LogOut, CreditCard } fro
 import { client } from "@/lib/data"
 import { cn } from "@/lib/utils"
 import { signOut } from "firebase/auth"
-import { auth } from "@/lib/firebase"
+import { auth as getAuth } from "@/lib/firebase"
 
 const menuItems = [
   { label: "My Services", href: "/", icon: LayoutGrid },
@@ -22,7 +22,7 @@ export function Sidebar() {
 
   const handleLogout = async () => {
     try {
-      await signOut(auth)
+      await signOut(getAuth())
       router.push("/login")
     } catch (error) {
       console.error("Logout failed:", error)

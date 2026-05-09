@@ -1,7 +1,7 @@
-import { initializeApp, getApps } from "firebase/app"
-import { getAuth } from "firebase/auth"
-import { getStorage } from "firebase/storage"
-import { getFirestore } from "firebase/firestore"
+import { initializeApp, getApps, type FirebaseApp } from "firebase/app"
+import { getAuth, type Auth } from "firebase/auth"
+import { getStorage, type FirebaseStorage } from "firebase/storage"
+import { getFirestore, type Firestore } from "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -12,10 +12,42 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 }
 
-// Initialize Firebase only if it hasn't been initialized already
-const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0]
-const auth = getAuth(app)
-const storage = getStorage(app)
-const db = getFirestore(app)
+// Lazy initialization to avoid build-time errors when env vars aren't set
+let app: FirebaseApp | undefined
+let auth: Auth | undefined
+let storage: FirebaseStorage | undefined
+let db: Firestore | undefined
 
-export { app, auth, storage, db }
+function getApp(): FirebaseApp {
+  if (!app) {
+    if (!firebaseConfig.apiKey) {
+      throw new Error("Firebase API key is not configured")
+    }
+    app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0]
+  }
+  return app
+}
+
+function getAuthInstance(): Auth {
+  if (!auth) {
+    auth = getAuth(getApp())
+  }
+  return auth
+}
+
+function getStorageInstance(): FirebaseStorage {
+  if (!storage) {
+    storage = getStorage(getApp())
+  }
+  return storage
+}
+
+function getDbInstance(): Firestore {
+  if (!db) {
+    db = getFirestore(getApp())
+  }
+  return db
+}
+
+// Export getters that lazily initialize
+export { getApp as app, getAuthInstance as auth, getStorageInstance as storage, getDbInstance as db }

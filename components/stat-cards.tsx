@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { collection, onSnapshot } from "firebase/firestore"
-import { db } from "@/lib/firebase"
+import { db as getDb } from "@/lib/firebase"
 import { Clock, CheckCircle2, AlertCircle, Users, IndianRupee, Loader2 } from "lucide-react"
 import { stats } from "@/lib/data"
 
@@ -17,7 +17,7 @@ export function StatCards() {
 
   useEffect(() => {
     // Subscribe to the customers collection in Firestore
-    const customersRef = collection(db, "customers")
+    const customersRef = collection(getDb(), "customers")
     
     const unsubscribe = onSnapshot(
       customersRef,
