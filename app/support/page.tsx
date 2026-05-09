@@ -106,7 +106,7 @@ export default function SupportPage() {
         </div>
         </main>
         <TalkToExpert />
-      </div>
     </AuthGuard>
+            </div>
   )
 }
